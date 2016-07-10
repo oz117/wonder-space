@@ -14,4 +14,26 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-#include "game.hpp"
+#ifndef   WINDOW_HPP_
+# define  WINDOW_HPP_
+
+#include   <SFML/Graphics.hpp>
+
+namespace window {
+  // An Alias to make things easier
+  using sfWindow = sf::RenderWindow;
+  using sfRectangle = sf::RectangleShape;
+
+  class Window {
+    public:
+      Window(void);
+      ~Window(void);
+      sfWindow &getWindow(void) noexcept;
+      bool updateScreen(void) noexcept;
+    private:
+      sfWindow      _window;
+      sfRectangle   _rectangleForLols;
+  };
+}
+
+#endif // WINDOW_HPP_

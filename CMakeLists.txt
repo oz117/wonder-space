@@ -59,7 +59,7 @@ check_compiler()
 include(ThirdPartyLibraries)
 
 include_directories(
-        ${PROJECT_SOURCE_DIR}/${INC_DIR}
+  ${PROJECT_SOURCE_DIR}/${INC_DIR}
 )
 
 include(Sources)
@@ -67,7 +67,7 @@ include(Sources)
 include(CxxFlags)
 
 include_directories("${PROJECT_BINARY_DIR}")
-include_directories("${PROJECT_BINARY_DIR}/${INCLUDE_DIR}")
+include_directories("${PROJECT_BINARY_DIR}/${INC_DIR}")
 
 # Add targets
 add_library(${LIB_NAME} ${SOURCE_FILES})

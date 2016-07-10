@@ -16,9 +16,27 @@
 //
 
 #include  <iostream>
+#include "window.hpp"
+
+using sfEvent = sf::Event;
 
 int main(__attribute__((unused)) int argc, __attribute__((unused)) char const *argv[]) {
-  std::cout << "Starting" << std::endl;
+  window::Window  mainWindow;
+  bool            isRunning;
 
+  isRunning = true;
+  while (isRunning) {
+    sfEvent event;
+    // FIXME: This is ugly. Handle events in a proper class or in window class.
+    while (mainWindow.getWindow().pollEvent(event)) {
+      // Did not knew you could do things like that yeah ! for C++11
+      if (event.type == sfEvent::Closed){
+        isRunning = false;
+        mainWindow.getWindow().close();
+      }
+    }
+    mainWindow.updateScreen();
+    // Intercept inputs and update screen
+  }
   return 0;
 }
