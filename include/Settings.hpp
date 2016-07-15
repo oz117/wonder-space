@@ -14,4 +14,22 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-#include "game.hpp"
+#include <string>
+
+using sstring = std::string;
+
+class Settings {
+  public:
+    static Settings *getInstance(const std::string& path);
+  private:
+    Settings(const std::string& path);
+    virtual ~Settings(void);
+    void loadFile(const std::string& path);
+    void setConfiguration(const std::string& line) noexcept;
+    int extractResolution(const std::string& line) noexcept;
+  private:
+    int     _height;
+    int     _width;
+    int     _errors;
+    sstring _title;
+};
