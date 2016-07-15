@@ -16,9 +16,37 @@
 //
 
 #include  <iostream>
+#include  <vector>
+#include  <fstream>
+
+#include  "Settings.hpp"
+
+std::string getConfigFilePath() {
+  static const std::vector<std::string> files = {"/tmp/wonder.settings",
+                                               "./wonder.settings"};
+
+  for (auto file : files) {
+      if (std::ifstream(file).good()) {
+          return file;
+      }
+  }
+  return std::string("");
+}
 
 int main(__attribute__((unused)) int argc, __attribute__((unused)) char const *argv[]) {
-  std::cout << "Starting" << std::endl;
+  std::string configFile;
 
+  configFile = getConfigFilePath();
+  // For now I will only do a simple check and exit if no file is found.
+  // Later on I will probably create the config file with a default one.
+  if (configFile == "") {
+    std::cout << "Config file not found."
+              << "Create one in the current directory or /tmp/"
+              << std::endl;
+  }
+  std::cout << "Found config file: " << configFile << std::endl;
+  Settings *settings = Settings::getInstance(configFile);
+  if (settings == nullptr)
+    return 1;
   return 0;
 }
