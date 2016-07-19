@@ -24,17 +24,20 @@
 // @return Settings* instance on object if success.
 // nullptr if config file is malformed.
 Settings *Settings::getInstance(const sstring& path) {
-  static Settings *instance;
+  static Settings *instance = nullptr;
 
-  instance = new Settings(path);
-  if (instance->_errors != 0) {
-    std::cerr << "Configuration file is broken" << std::endl;
-    instance = nullptr;
+  if (instance == nullptr) {
+    instance = new Settings(path);
+    if (instance->_errors != 0 || instance->_readLines == 0) {
+      // This will be replaced y a logger later on :)
+      std::cerr << "Configuration file is broken" << std::endl;
+      instance = nullptr;
+    }
   }
   return instance;
 }
 
-Settings::Settings(const sstring& path): _errors(0) {
+Settings::Settings(const sstring& path): _errors(0), _readLines(0) {
   loadFile(path);
 }
 
@@ -60,6 +63,7 @@ void Settings::loadFile(const sstring& path) {
 void Settings::setConfiguration(const sstring& line) noexcept {
   size_t  pos;
 
+  this->_readLines++;
   pos = line.find("= ") + 2;
   if (!line.compare(0, 5, "title"))
     this->_title = line.substr(pos);
@@ -84,4 +88,16 @@ int Settings::extractResolution(const sstring& line) noexcept {
     return (this->_errors = 1);
   }
   return (0);
+}
+
+const std::string&  Settings::getTitle(void) const noexcept {
+  return this->_title;
+}
+
+int   Settings::getWidth(void) const noexcept {
+  return this->_width;
+}
+
+int   Settings::getHeight(void) const noexcept {
+  return this->_height;
 }

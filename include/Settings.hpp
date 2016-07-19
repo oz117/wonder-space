@@ -20,16 +20,20 @@ using sstring = std::string;
 
 class Settings {
   public:
-    static Settings *getInstance(const std::string& path);
+    static Settings     *getInstance(const std::string& path = "");
+    const std::string&  getTitle(void) const noexcept;
+    int                 getWidth(void) const noexcept;
+    int                 getHeight(void) const noexcept;
   private:
     Settings(const std::string& path);
     virtual ~Settings(void);
     void loadFile(const std::string& path);
     void setConfiguration(const std::string& line) noexcept;
-    int extractResolution(const std::string& line) noexcept;
+    int  extractResolution(const std::string& line) noexcept;
   private:
     int     _height;
     int     _width;
     int     _errors;
+    int     _readLines;
     sstring _title;
 };
