@@ -38,14 +38,13 @@ std::string getConfigFilePath() {
 
 int main(__attribute__((unused)) int argc, __attribute__((unused)) char const *argv[]) {
   std::string configFile;
-  window::Window  mainWindow;
   bool            isRunning;
 
   configFile = getConfigFilePath();
   // For now I will only do a simple check and exit if no file is found.
   // Later on I will probably create the config file with a default one.
   if (configFile == "") {
-    std::cout << "Config file not found."
+    std::cerr << "Config file not found."
               << "Create one in the current directory or /tmp/"
               << std::endl;
   }
@@ -54,6 +53,7 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char const *a
   if (settings == nullptr)
     return 1;
 
+  window::Window  mainWindow;
   isRunning = true;
   while (isRunning) {
     sfEvent event;

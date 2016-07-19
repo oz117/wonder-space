@@ -16,9 +16,11 @@
 
 // USing this for lols as of feature/create_main_window
 // Will Probably remove thie later. Will see :)
-#include   <vector>
+#include  <iostream>
+#include  <vector>
 
-#include "window.hpp"
+#include  "window.hpp"
+#include  "Settings.hpp"
 
 using namespace window;
 using vec2f = sf::Vector2f;
@@ -26,11 +28,16 @@ using vec2f = sf::Vector2f;
 // Creates the window by setting it s title and size
 // Also setting up a few other things just to improve play experience
 // FIXME: Add an icon to the app
+// FIXME: All the cast are temporary. It is only for now and for the tests
 Window::Window(void) {
-  this->_window.create(sf::VideoMode(480, 800), "Wonder-space");
+  Settings *settings = Settings::getInstance();
+  unsigned int width = (unsigned int) settings->getWidth();
+  unsigned int height = (unsigned int) settings->getHeight();
+
+  this->_window.create(sf::VideoMode(width, height), settings->getTitle());
   this->_window.setVerticalSyncEnabled(true);
   this->_window.setKeyRepeatEnabled(true);
-  this->_rectangleForLols.setSize(vec2f{480, 800});
+  this->_rectangleForLols.setSize(vec2f{(float) width, (float) height});
   this->_rectangleForLols.setFillColor(sf::Color::Red);
 }
 
