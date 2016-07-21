@@ -38,7 +38,7 @@ Window::Window(void) {
   this->_window.setVerticalSyncEnabled(true);
   this->_window.setKeyRepeatEnabled(true);
   this->_rectangleForLols.setSize(vec2f{(float) width, (float) height});
-  this->_rectangleForLols.setFillColor(sf::Color::Red);
+  this->_rectangleForLols.setFillColor(sf::Color::Blue);
 }
 
 Window::~Window(void) {
