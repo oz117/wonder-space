@@ -14,6 +14,9 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+#ifndef   SETTINGS_HPP_
+# define  SETTINGS_HPP_
+
 #include <string>
 
 using sstring = std::string;
@@ -37,3 +40,5 @@ class Settings {
     int     _readLines;
     sstring _title;
 };
+
+#endif  // SETTINGS_HPP_
