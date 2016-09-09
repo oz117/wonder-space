@@ -19,7 +19,7 @@
 #include  <vector>
 #include  <fstream>
 
-#include "window.hpp"
+#include  "window.hpp"
 #include  "Settings.hpp"
 
 using sfEvent = sf::Event;
@@ -49,20 +49,17 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char const *a
               << std::endl;
   }
   std::cout << "Found config file: " << configFile << std::endl;
-  Settings *settings = Settings::getInstance(configFile);
+  auto *settings = Settings::getInstance(configFile);
   if (settings == nullptr)
     return 1;
 
   window::Window  mainWindow;
   isRunning = true;
   while (isRunning) {
-    sfEvent event;
-    // FIXME: This is ugly. Handle events in a proper class or in window class.
-    while (mainWindow.getWindow().pollEvent(event)) {
-      if (event.type == sfEvent::Closed){
-        isRunning = false;
-        mainWindow.getWindow().close();
-      }
+    auto key = mainWindow.handleInput();
+    if (key == key::ESC){
+      isRunning = false;
+      mainWindow.getWindow().close();
     }
     // Intercept inputs and update screen
     mainWindow.updateScreen();

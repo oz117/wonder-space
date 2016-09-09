@@ -48,10 +48,40 @@ sfWindow &Window::getWindow(void) noexcept {
   return this->_window;
 }
 
-bool Window::updateScreen(void) noexcept{
+bool Window::updateScreen(void) noexcept {
   this->_window.clear();
   this->_window.draw(this->_rectangleForLols);
   this->_window.display();
 
   return true;
+}
+
+key Window::handleInput(void) noexcept {
+  sf::Event   event;
+
+  if (this->_window.pollEvent(event)) {
+      switch (event.type) {
+          case sf::Event::Closed :
+              return (Keys::ESC);
+              break;
+          case sf::Event::KeyPressed:
+              switch (event.key.code) {
+                  case sf::Keyboard::Escape :
+                      return (Keys::ESC);
+                      break ;
+                  case sf::Keyboard::Right:
+                      return (Keys::RIGHT);
+                      break ;
+                  case sf::Keyboard::Left:
+                      return (Keys::LEFT);
+                      break ;
+                  default:
+                      break ;
+                  }
+              break ;
+          default:
+              break ;
+      }
+  }
+  return (Keys::NONE);
 }

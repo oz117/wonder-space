@@ -14,30 +14,16 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-#ifndef   WINDOW_HPP_
-# define  WINDOW_HPP_
+#ifndef   INPUT_HPP_
+# define  INPUT_HPP_
 
-#include  <SFML/Graphics.hpp>
-#include  "Input.hpp"
-
-using key = Keys::Key;
-
-namespace window {
-  // An Alias to make things easier
-  using sfWindow = sf::RenderWindow;
-  using sfRectangle = sf::RectangleShape;
-
-  class Window {
-    public:
-      Window(void);
-      ~Window(void);
-      sfWindow &getWindow(void) noexcept;
-      bool updateScreen(void) noexcept;
-      key handleInput(void) noexcept;
-    private:
-      sfWindow      _window;
-      sfRectangle   _rectangleForLols;
-  };
+namespace Keys {
+    enum  Key{
+        LEFT,
+        RIGHT,
+        ESC,
+        NONE
+    };
 }
 
-#endif // WINDOW_HPP_
+#endif    // INPUT_HPP_
