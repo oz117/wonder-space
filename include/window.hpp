@@ -32,6 +32,8 @@ namespace window {
       bool updateScreen(void) noexcept;
     private:
       sfWindow      _window;
+      sf::Texture   _texture;
+      sf::Sprite    _sprite;
       sfRectangle   _rectangleForLols;
   };
 }

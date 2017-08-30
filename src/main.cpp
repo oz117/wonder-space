@@ -37,7 +37,7 @@ std::string getConfigFilePath() {
 }
 
 int main(__attribute__((unused)) int argc, __attribute__((unused)) char const *argv[]) {
-  std::string configFile;
+  std::string     configFile;
   bool            isRunning;
 
   configFile = getConfigFilePath();
@@ -47,6 +47,7 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char const *a
     std::cerr << "Config file not found."
               << "Create one in the current directory or /tmp/"
               << std::endl;
+    return EXIT_FAILURE;
   }
   std::cout << "Found config file: " << configFile << std::endl;
   Settings *settings = Settings::getInstance(configFile);
@@ -67,5 +68,5 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char const *a
     // Intercept inputs and update screen
     mainWindow.updateScreen();
   }
-  return 0;
+  return EXIT_SUCCESS;
 }

@@ -37,8 +37,8 @@ Window::Window(void) {
   this->_window.create(sf::VideoMode(width, height), settings->getTitle());
   this->_window.setVerticalSyncEnabled(true);
   this->_window.setKeyRepeatEnabled(true);
-  this->_rectangleForLols.setSize(vec2f{(float) width, (float) height});
-  this->_rectangleForLols.setFillColor(sf::Color::Blue);
+  this->_texture.loadFromFile("../assets/ship.png");
+  this->_sprite.setTexture(this->_texture);
 }
 
 Window::~Window(void) {
@@ -50,7 +50,7 @@ sfWindow &Window::getWindow(void) noexcept {
 
 bool Window::updateScreen(void) noexcept{
   this->_window.clear();
-  this->_window.draw(this->_rectangleForLols);
+  this->_window.draw(this->_sprite);
   this->_window.display();
 
   return true;
