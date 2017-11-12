@@ -60,6 +60,8 @@ include(ThirdPartyLibraries)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/${INC_DIR}
+  ${PROJECT_SOURCE_DIR}/${INC_DIR}/Actors
+  ${PROJECT_SOURCE_DIR}/${INC_DIR}/Commands
 )
 
 include(Sources)
@@ -70,7 +72,7 @@ include_directories("${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_BINARY_DIR}/${INC_DIR}")
 
 # Add targets
-add_library(${LIB_NAME} ${SOURCE_FILES})
+add_library(${LIB_NAME} ${SOURCES})
 add_executable(${BIN_NAME} ${MAIN_SOURCE_FILE})
 
 # Libraries links

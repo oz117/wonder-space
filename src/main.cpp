@@ -19,10 +19,9 @@
 #include  <vector>
 #include  <fstream>
 
-#include "window.hpp"
+#include  "Window.hpp"
 #include  "Settings.hpp"
-
-using sfEvent = sf::Event;
+#include  "InputHandler.hpp"
 
 std::string getConfigFilePath() {
   static const std::vector<std::string> files = {"/tmp/wonder.settings",
@@ -39,6 +38,7 @@ std::string getConfigFilePath() {
 int main(__attribute__((unused)) int argc, __attribute__((unused)) char const *argv[]) {
   std::string     configFile;
   bool            isRunning;
+  event::InputHandler inputHandler;
 
   configFile = getConfigFilePath();
   // For now I will only do a simple check and exit if no file is found.
@@ -54,18 +54,10 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char const *a
   if (settings == nullptr)
     return 1;
 
-  window::Window  mainWindow;
+  window::Window  mainWindow(inputHandler);
   isRunning = true;
-  while (isRunning) {
-    sfEvent event;
-    // FIXME: This is ugly. Handle events in a proper class or in window class.
-    while (mainWindow.getWindow().pollEvent(event)) {
-      if (event.type == sfEvent::Closed){
-        isRunning = false;
-        mainWindow.getWindow().close();
-      }
-    }
-    // Intercept inputs and update screen
+  while (mainWindow.getIsRunning()) {
+    mainWindow.pollEvents();
     mainWindow.updateScreen();
   }
   return EXIT_SUCCESS;

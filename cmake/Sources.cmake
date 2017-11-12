@@ -14,19 +14,27 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-file(GLOB_RECURSE Sources "${PROJECT_SOURCE_DIR}/${SRC_DIR}/*.cpp")
-file(GLOB_RECURSE Headers "${PROJECT_SOURCE_DIR}/${INC_DIR}/*.hpp")
 
 # Resource files
 set(ResourceFiles ${CONFIG_FILE_SOURCE})
 
 # Main source file
 set(MAIN_SOURCE_FILE ${PROJECT_SOURCE_DIR}/${SRC_DIR}/main.cpp)
-list(REMOVE_ITEM Sources ${MAIN_SOURCE_FILE})
 
 # SOURCE_FILES
-set(SOURCE_FILES
-        ${Sources}
-        ${Headers}
-        ${ResourceFiles}
+set(SOURCES
+        ${PROJECT_SOURCE_DIR}/${SRC_DIR}/Utils/Settings.cpp
+        ${PROJECT_SOURCE_DIR}/${SRC_DIR}/Window/Window.cpp
+        ${PROJECT_SOURCE_DIR}/${SRC_DIR}/Actors/Player.cpp
+        ${PROJECT_SOURCE_DIR}/${SRC_DIR}/Commands/Commands.cpp
+        ${PROJECT_SOURCE_DIR}/${SRC_DIR}/Commands/NullCommand.cpp
+        ${PROJECT_SOURCE_DIR}/${SRC_DIR}/InputHandler.cpp
+        ${PROJECT_SOURCE_DIR}/${INC_DIR}/Settings.hpp
+        ${PROJECT_SOURCE_DIR}/${INC_DIR}/Window.hpp
+        ${PROJECT_SOURCE_DIR}/${INC_DIR}/Actors/Actor.hpp
+        ${PROJECT_SOURCE_DIR}/${INC_DIR}/Actors/Player.hpp
+        ${PROJECT_SOURCE_DIR}/${INC_DIR}/Commands/Command.hpp
+        ${PROJECT_SOURCE_DIR}/${INC_DIR}/Commands/Commands.hpp
+        ${PROJECT_SOURCE_DIR}/${INC_DIR}/Commands/NullCommand.hpp
+        ${PROJECT_SOURCE_DIR}/${INC_DIR}/InputHandler.hpp
 )

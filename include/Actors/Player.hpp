@@ -13,35 +13,23 @@
 // WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+//
 
-#ifndef   WINDOW_HPP_
-# define  WINDOW_HPP_
+#ifndef   PLAYER_HPP_
+# define  PLAYER_HPP_
 
-#include  <SFML/Graphics.hpp>
-#include  "InputHandler.hpp"
-#include  "Player.hpp"
+#include "Actor.hpp"
 
-namespace window {
-  // An Alias to make things easier
-  using sfWindow = sf::RenderWindow;
-  using sfRectangle = sf::RectangleShape;
-  using sfEvent = sf::Event;
+namespace actor {
 
-  class Window {
+  class Player : public IActor {
     public:
-      Window(event::InputHandler &inputHandler);
-      ~Window(void);
-      bool getIsRunning(void) noexcept;
-      sfWindow &getWindow(void) noexcept;
-      bool updateScreen(void) noexcept;
-      void pollEvents(void) noexcept;
-    private:
-      sfWindow      _window;
-
-      bool          _isRunning;
-      event::InputHandler _inputHandler;
-      actor::IActor       *_actor;
+      Player(const int x, const int y, const int xMax);
+      ~Player(void);
+      void FireCommand();
+      void MoveRightCommand();
+      void MoveLeftCommand();
   };
 }
 
-#endif // WINDOW_HPP_
+#endif // PLAYER_HPP_

@@ -4,7 +4,7 @@
 //
 // Permission to use, copy, modify, and/or distribute this software for any
 // purpose with or without fee is hereby granted, provided that the above
-// copyright notice and this permission notice appear in all copies.
+// copyright notice and this permission notice appear in all cpoies.
 //
 // THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
 // WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
@@ -13,35 +13,31 @@
 // WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+//
 
-#ifndef   WINDOW_HPP_
-# define  WINDOW_HPP_
+#ifndef   ACTOR_HPP_
+# define  ACTOR_HPP_
 
 #include  <SFML/Graphics.hpp>
-#include  "InputHandler.hpp"
-#include  "Player.hpp"
 
-namespace window {
-  // An Alias to make things easier
-  using sfWindow = sf::RenderWindow;
-  using sfRectangle = sf::RectangleShape;
-  using sfEvent = sf::Event;
+namespace actor {
+  using Texture = sf::Texture;
+  using Sprite = sf::Sprite;
 
-  class Window {
+  class IActor {
     public:
-      Window(event::InputHandler &inputHandler);
-      ~Window(void);
-      bool getIsRunning(void) noexcept;
-      sfWindow &getWindow(void) noexcept;
-      bool updateScreen(void) noexcept;
-      void pollEvents(void) noexcept;
-    private:
-      sfWindow      _window;
-
-      bool          _isRunning;
-      event::InputHandler _inputHandler;
-      actor::IActor       *_actor;
+      virtual ~IActor() {};
+      virtual void FireCommand() = 0;
+      virtual void MoveRightCommand() = 0;
+      virtual void MoveLeftCommand() = 0;
+      virtual Sprite getSprite() { return this->_sprite; };
+    protected:
+      int _x;
+      int _y;
+      int _xMax;
+      Texture _texture;
+      Sprite  _sprite;
   };
 }
 
-#endif // WINDOW_HPP_
+#endif // ACTOR_HPP_

@@ -19,7 +19,7 @@
 #include  <iostream>
 #include  <vector>
 
-#include  "window.hpp"
+#include  "Window.hpp"
 #include  "Settings.hpp"
 
 using namespace window;
@@ -29,7 +29,7 @@ using vec2f = sf::Vector2f;
 // Also setting up a few other things just to improve play experience
 // FIXME: Add an icon to the app
 // FIXME: All the cast are temporary. It is only for now and for the tests
-Window::Window(void) {
+Window::Window(event::InputHandler &inputHandler) {
   Settings *settings = Settings::getInstance();
   unsigned int width = (unsigned int) settings->getWidth();
   unsigned int height = (unsigned int) settings->getHeight();
@@ -37,11 +37,16 @@ Window::Window(void) {
   this->_window.create(sf::VideoMode(width, height), settings->getTitle());
   this->_window.setVerticalSyncEnabled(true);
   this->_window.setKeyRepeatEnabled(true);
-  this->_texture.loadFromFile("../assets/ship.png");
-  this->_sprite.setTexture(this->_texture);
+  this->_isRunning = true;
+  this->_inputHandler = inputHandler;
+  this->_actor = new actor::Player(0, (int)height, (int)width);
 }
 
 Window::~Window(void) {
+}
+
+bool Window::getIsRunning() noexcept {
+  return this->_isRunning;
 }
 
 sfWindow &Window::getWindow(void) noexcept {
@@ -50,8 +55,34 @@ sfWindow &Window::getWindow(void) noexcept {
 
 bool Window::updateScreen(void) noexcept{
   this->_window.clear();
-  this->_window.draw(this->_sprite);
+  this->_window.draw(this->_actor->getSprite());
   this->_window.display();
 
   return true;
+}
+
+void Window::pollEvents(void) noexcept {
+  sfEvent event;
+
+  while (this->_window.pollEvent(event)) {
+    if (event.type == sfEvent::Closed){
+      this->_isRunning = false;
+      this->_window.close();
+    }
+    else if (event.type == sfEvent::KeyPressed) {
+      if (event.key.code == sf::Keyboard::Escape) {
+        this->_isRunning = false;
+        this->_window.close();
+      }
+      else if (event.key.code == sf::Keyboard::Space) {
+          this->_actor->FireCommand();
+      }
+      else if (event.key.code == sf::Keyboard::Right) {
+          this->_actor->MoveRightCommand();
+      }
+      else if (event.key.code == sf::Keyboard::Left) {
+          this->_actor->MoveLeftCommand();
+      }
+    }
+  }
 }

@@ -13,35 +13,16 @@
 // WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+//
 
-#ifndef   WINDOW_HPP_
-# define  WINDOW_HPP_
+#include  "NullCommand.hpp"
 
-#include  <SFML/Graphics.hpp>
-#include  "InputHandler.hpp"
-#include  "Player.hpp"
+using namespace command;
 
-namespace window {
-  // An Alias to make things easier
-  using sfWindow = sf::RenderWindow;
-  using sfRectangle = sf::RectangleShape;
-  using sfEvent = sf::Event;
+NullCommand::~NullCommand(void) {
 
-  class Window {
-    public:
-      Window(event::InputHandler &inputHandler);
-      ~Window(void);
-      bool getIsRunning(void) noexcept;
-      sfWindow &getWindow(void) noexcept;
-      bool updateScreen(void) noexcept;
-      void pollEvents(void) noexcept;
-    private:
-      sfWindow      _window;
-
-      bool          _isRunning;
-      event::InputHandler _inputHandler;
-      actor::IActor       *_actor;
-  };
 }
 
-#endif // WINDOW_HPP_
+void NullCommand::execute(__attribute__((unused)) actor::IActor& actor) {
+
+}

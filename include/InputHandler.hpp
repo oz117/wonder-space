@@ -14,34 +14,17 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-#ifndef   WINDOW_HPP_
-# define  WINDOW_HPP_
+#ifndef   INPUTHANLDER_HPP_
+# define  INPUTHANLDER_HPP_
 
-#include  <SFML/Graphics.hpp>
-#include  "InputHandler.hpp"
-#include  "Player.hpp"
+#include "Command.hpp"
 
-namespace window {
-  // An Alias to make things easier
-  using sfWindow = sf::RenderWindow;
-  using sfRectangle = sf::RectangleShape;
-  using sfEvent = sf::Event;
-
-  class Window {
+namespace event {
+  class InputHandler {
     public:
-      Window(event::InputHandler &inputHandler);
-      ~Window(void);
-      bool getIsRunning(void) noexcept;
-      sfWindow &getWindow(void) noexcept;
-      bool updateScreen(void) noexcept;
-      void pollEvents(void) noexcept;
-    private:
-      sfWindow      _window;
-
-      bool          _isRunning;
-      event::InputHandler _inputHandler;
-      actor::IActor       *_actor;
+      ~InputHandler();
+      command::Command* HandleInput();
   };
 }
 
-#endif // WINDOW_HPP_
+#endif // INPUTHANLDER_HPP_
