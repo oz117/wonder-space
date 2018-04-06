@@ -30,3 +30,6 @@
 
 build/*
 .clang_complete
+
+# Mac file
+.DS_Store

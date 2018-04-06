@@ -26,6 +26,9 @@ set(SOURCES
         ${PROJECT_SOURCE_DIR}/${SRC_DIR}/Utils/Settings.cpp
         ${PROJECT_SOURCE_DIR}/${SRC_DIR}/Window/Window.cpp
         ${PROJECT_SOURCE_DIR}/${SRC_DIR}/Actors/Player.cpp
+        ${PROJECT_SOURCE_DIR}/${SRC_DIR}/Actors/Enemy.cpp
+        ${PROJECT_SOURCE_DIR}/${SRC_DIR}/Actors/Model.cpp
+        ${PROJECT_SOURCE_DIR}/${SRC_DIR}/Actors/Model.cpp
         ${PROJECT_SOURCE_DIR}/${SRC_DIR}/Commands/Commands.cpp
         ${PROJECT_SOURCE_DIR}/${SRC_DIR}/Commands/NullCommand.cpp
         ${PROJECT_SOURCE_DIR}/${SRC_DIR}/InputHandler.cpp
@@ -33,6 +36,8 @@ set(SOURCES
         ${PROJECT_SOURCE_DIR}/${INC_DIR}/Window.hpp
         ${PROJECT_SOURCE_DIR}/${INC_DIR}/Actors/Actor.hpp
         ${PROJECT_SOURCE_DIR}/${INC_DIR}/Actors/Player.hpp
+        ${PROJECT_SOURCE_DIR}/${INC_DIR}/Actors/Enemy.hpp
+        ${PROJECT_SOURCE_DIR}/${INC_DIR}/Actors/Model.hpp
         ${PROJECT_SOURCE_DIR}/${INC_DIR}/Commands/Command.hpp
         ${PROJECT_SOURCE_DIR}/${INC_DIR}/Commands/Commands.hpp
         ${PROJECT_SOURCE_DIR}/${INC_DIR}/Commands/NullCommand.hpp

@@ -20,12 +20,15 @@
 #include  <SFML/Graphics.hpp>
 #include  "InputHandler.hpp"
 #include  "Player.hpp"
+#include  "Enemy.hpp"
 
 namespace window {
   // An Alias to make things easier
   using sfWindow = sf::RenderWindow;
   using sfRectangle = sf::RectangleShape;
   using sfEvent = sf::Event;
+  using sfClock = sf::Clock;
+  using sfTime = sf::Time;
 
   class Window {
     public:
@@ -37,10 +40,13 @@ namespace window {
       void pollEvents(void) noexcept;
     private:
       sfWindow      _window;
-
+      sfClock       _clock;
       bool          _isRunning;
       event::InputHandler _inputHandler;
       actor::IActor       *_actor;
+      actor::IActor       *_enemy[3][11];
+      model::Model        *_actorModel;
+      model::Model        *_enemyModel[3];
   };
 }
 

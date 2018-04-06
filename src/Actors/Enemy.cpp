@@ -16,50 +16,79 @@
 
 #include <iostream>
 
-#include "Player.hpp"
+#include "Enemy.hpp"
 #include "Settings.hpp"
 
 using namespace actor;
 
-Player::Player(
+Enemy::Enemy(
   const int x,
   const int y,
   const int xMax,
   model::Model& model) : _model(model) {
+  sf::Vector2i position(0, 0);
+  sf::Vector2i size(104, 64);
+
+  this->_currentSize = SpriteSize::Start;
   this->_x = x;
-  this->_y = y - 200;
+  this->_y = y;
+  this->_xMax = xMax;
+  this->_rect.left = position.x;
+  this->_rect.top = position.y;
+  this->_rect.width = size.x;
+  this->_rect.height = size.y;
   this->_sprite.setTexture(this->_model.getTexture());
-  this->_xMax = (int)((unsigned int)xMax - this->_model.getTexture().getSize().x);
-  this->_sprite.setPosition(x, this->_y);
+  this->_sprite.setTextureRect(this->_rect);
+  this->_xMax = (int)((unsigned int)xMax - 104);
+  this->setPosition();
+  this->_moveFunction = [=](void) {
+    this->MoveRightCommand();
+  };
 }
 
-Player::~Player(void) {
+Enemy::~Enemy(void) {
+
 }
 
-void Player::FireCommand() {
+void Enemy::FireCommand() {
   std::cout << "Fire !!" << std::endl;
 };
 
-void Player::MoveRightCommand() {
-  if ((this->_x + 15 < this->_xMax)) {
-    this->_x += 15;
+void Enemy::MoveRightCommand(void) {
+  if ((this->_x + 10 < this->_xMax)) {
+    this->_x += 10;
   }
   else {
     this->_x = this->_xMax;
+    this->_y += 84;
+    this->_moveFunction = [=](void) {
+      this->MoveLeftCommand();
+    };
   }
   this->setPosition();
 };
 
-void Player::MoveLeftCommand() {
+void Enemy::MoveLeftCommand() {
   if ((this->_x - 10 >= 0)) {
     this->_x -= 10;
   }
   else {
     this->_x = 0;
+    this->_y += 84;
+    this->_moveFunction = [=](void) {
+      this->MoveRightCommand();
+    };
   }
   this->setPosition();
 };
 
-void Player::UpdateSprite(void) {
-
+void Enemy::UpdateSprite(void) {
+  if (this->_currentSize == SpriteSize::Over){
+    return;
+  }
+  this->_currentSize =
+    this->_currentSize == SpriteSize::Start ? SpriteSize::Middle : SpriteSize::Start;
+  this->_rect.left = this->_size[this->_currentSize];
+  this->_sprite.setTextureRect(this->_rect);
+  this->_moveFunction();
 }

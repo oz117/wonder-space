@@ -4,7 +4,7 @@
 //
 // Permission to use, copy, modify, and/or distribute this software for any
 // purpose with or without fee is hereby granted, provided that the above
-// copyright notice and this permission notice appear in all copies.
+// copyright notice and this permission notice appear in all cpoies.
 //
 // THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
 // WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
@@ -15,27 +15,20 @@
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-#ifndef   PLAYER_HPP_
-# define  PLAYER_HPP_
+#include <iostream>
 
-#include "Actor.hpp"
 #include "Model.hpp"
 
-namespace actor {
-  using IntRect = sf::IntRect;
+using namespace model;
 
-  class Player : public IActor {
-    public:
-      Player(const int x, const int y, const int xMax, model::Model& model);
-      ~Player(void);
-      void FireCommand(void);
-      void MoveRightCommand(void);
-      void MoveLeftCommand(void);
-      void UpdateSprite(void);
-    private:
-      model::Model &_model;
-      IntRect      _rect;
-  };
+Model::Model(const std::string& asset){
+  this->_texture.loadFromFile(asset);
+  std::cout << "Asset: " << asset << " loaded" << std::endl;
 }
 
-#endif // PLAYER_HPP_
+// TODO check how to clean texture and sprite
+Model::~Model(void) {}
+
+const Texture& Model::getTexture(void) noexcept{
+  return this->_texture;
+}

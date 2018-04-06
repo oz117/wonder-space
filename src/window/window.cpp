@@ -37,9 +37,21 @@ Window::Window(event::InputHandler &inputHandler) {
   this->_window.create(sf::VideoMode(width, height), settings->getTitle());
   this->_window.setVerticalSyncEnabled(true);
   this->_window.setKeyRepeatEnabled(true);
+  this->_window.setFramerateLimit(60);
   this->_isRunning = true;
   this->_inputHandler = inputHandler;
-  this->_actor = new actor::Player(0, (int)height, (int)width);
+  this->_enemyModel[0] = new model::Model("../assets/row_1.png");
+  this->_enemyModel[1] = new model::Model("../assets/row_2.png");
+  this->_enemyModel[2] = new model::Model("../assets/row_3.png");
+  this->_actorModel = new model::Model("../assets/ship.png");
+  this->_actor = new actor::Player(0, (int)height, (int)width, *this->_actorModel);
+  for(auto i = 0; i < 3; i++)
+  {
+    auto y = 160 * i;
+    for(auto j = 0; j < 11; j++) {
+        this->_enemy[i][j] = new actor::Enemy(j * 104, y, (int)width, *this->_enemyModel[i]);
+    }
+  }
 }
 
 Window::~Window(void) {
@@ -53,9 +65,21 @@ sfWindow &Window::getWindow(void) noexcept {
   return this->_window;
 }
 
-bool Window::updateScreen(void) noexcept{
+bool Window::updateScreen(void) noexcept {
+  sfTime elapsed = this->_clock.getElapsedTime();
+
   this->_window.clear();
   this->_window.draw(this->_actor->getSprite());
+  for(auto i = 0; i < 3; i++)
+  {
+    for(auto j = 0; j < 11; j++) {
+      if (elapsed.asSeconds() >= 0.4) {
+        this->_enemy[i][j]->UpdateSprite();
+        this->_clock.restart();
+      }
+      this->_window.draw(this->_enemy[i][j]->getSprite());
+    }
+  }
   this->_window.display();
 
   return true;
@@ -65,7 +89,7 @@ void Window::pollEvents(void) noexcept {
   sfEvent event;
 
   while (this->_window.pollEvent(event)) {
-    if (event.type == sfEvent::Closed){
+    if (event.type == sfEvent::Closed) {
       this->_isRunning = false;
       this->_window.close();
     }

@@ -15,44 +15,24 @@
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-#ifndef   ACTOR_HPP_
-# define  ACTOR_HPP_
+#ifndef   ENEMYMODEL_HPP_
+# define  ENEMYMODEL_HPP_
 
 #include  <SFML/Graphics.hpp>
 
-namespace actor {
+namespace model {
   using Texture = sf::Texture;
   using Sprite = sf::Sprite;
-  using Vector2i = sf::Vector2i;
-  enum SpriteSize {
-    Start,
-    Middle,
-    Over
-  };
 
-  class IActor {
+  class Model {
     public:
-      virtual ~IActor(void) {};
-      virtual void FireCommand(void) = 0;
-      virtual void MoveRightCommand(void) = 0;
-      virtual void MoveLeftCommand(void) = 0;
-      virtual void UpdateSprite(void) = 0;
-      const Sprite& getSprite(void) { return this->_sprite; };
-      void setPosition(const int x, const int y) { this->_sprite.setPosition(x, y); };
-      void setPosition(void) { this->_sprite.setPosition(this->_x, this->_y); };
-    protected:
-      int _x;
-      int _y;
-      int _xMax;
-      SpriteSize    _currentSize;
-      int      _size[3] = {
-        0,
-        104,
-        208
-      };
-      Texture       _texture;
-      Sprite        _sprite;
+      Model(const std::string& asset);
+      ~Model(void);
+      const Texture& getTexture(void) noexcept;
+    private:
+      Model(void);
+      Texture _texture;
   };
 }
 
-#endif // ACTOR_HPP_
+#endif // ENEMYMODEL_HPP_
