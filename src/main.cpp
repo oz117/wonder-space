@@ -20,7 +20,6 @@
 #include  <fstream>
 
 #include  "Window.hpp"
-#include  "Settings.hpp"
 #include  "InputHandler.hpp"
 
 std::string getConfigFilePath() {
@@ -50,11 +49,9 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char const *a
     return EXIT_FAILURE;
   }
   std::cout << "Found config file: " << configFile << std::endl;
-  Settings *settings = Settings::getInstance(configFile);
-  if (settings == nullptr)
-    return 1;
+  Settings settings(configFile);
 
-  window::Window  mainWindow(inputHandler);
+  window::Window  mainWindow(inputHandler, settings);
   isRunning = true;
   while (mainWindow.getIsRunning()) {
     mainWindow.pollEvents();
