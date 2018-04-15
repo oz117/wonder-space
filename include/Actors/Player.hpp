@@ -26,14 +26,14 @@ namespace actor {
 
   class Player : public IActor {
     public:
-      Player(const int x, const int y, const int xMax, model::Model& model);
+      Player(const int x, const int y, const int xMax, model::Model const &model);
       ~Player(void);
       void FireCommand(void);
       void MoveRightCommand(void);
       void MoveLeftCommand(void);
       void UpdateSprite(void);
     private:
-      model::Model &_model;
+      model::Model const &_model;
       IntRect      _rect;
   };
 }

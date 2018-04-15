@@ -18,6 +18,7 @@
 # define  WINDOW_HPP_
 
 #include  <SFML/Graphics.hpp>
+#include  <array>
 #include  "InputHandler.hpp"
 #include  "Player.hpp"
 #include  "Enemy.hpp"
@@ -30,6 +31,11 @@ namespace window {
   using sfEvent = sf::Event;
   using sfClock = sf::Clock;
   using sfTime = sf::Time;
+
+  const sstring ActorAsset =  "../assets/ship.png";
+  const sstring EnemyRow1 =   "../assets/row_1.png";
+  const sstring EnemyRow2 =   "../assets/row_2.png";
+  const sstring EnemyRow3 =   "../assets/row_3.png";
 
   class Window {
     public:
@@ -44,10 +50,10 @@ namespace window {
       sfClock       _clock;
       bool          _isRunning;
       event::InputHandler _inputHandler;
-      std::unique_ptr<actor::IActor>       _actor;
-      std::unique_ptr<actor::IActor>       _enemy[3][11];
-      model::Model        *_actorModel;
-      model::Model        *_enemyModel[3];
+      std::unique_ptr<actor::IActor>  _actor;
+      std::unique_ptr<actor::IActor>  _enemy[3][11];
+      model::Model                    _actorModel;
+      std::array<model::Model*, 3>    _enemyModel;
   };
 }
 
