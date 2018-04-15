@@ -60,6 +60,11 @@ Window::Window(event::InputHandler const &inputHandler, Settings const &settings
 }
 
 Window::~Window(void) {
+  std::for_each(
+    this->_enemyModel.begin(),
+    this->_enemyModel.begin(),
+    [](model::Model *model) { delete model; }
+  );
 }
 
 bool Window::getIsRunning() const noexcept {
