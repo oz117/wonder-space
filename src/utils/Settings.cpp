@@ -19,26 +19,15 @@
 
 #include  "Settings.hpp"
 
-// @description Using singleton parttern.
-// @param std::string path to configuration file
-// @return Settings* instance on object if success.
-// nullptr if config file is malformed.
-Settings *Settings::getInstance(const sstring& path) {
-  static Settings *instance = nullptr;
-
-  if (instance == nullptr) {
-    instance = new Settings(path);
-    if (instance->_errors != 0 || instance->_readLines == 0) {
-      // This will be replaced y a logger later on :)
-      std::cerr << "Configuration file is broken" << std::endl;
-      instance = nullptr;
-    }
-  }
-  return instance;
-}
-
 Settings::Settings(const sstring& path): _errors(0), _readLines(0) {
   loadFile(path);
+  if (this->_errors == 0 || this->_readLines != 0) {
+    return;
+  }
+  // This will be replaced by a logger later on :)
+  std::cerr << "Configuration file is broken" << std::endl;
+  this->_width = 629;
+  this->_height = 600;
 }
 
 Settings::~Settings(void) {}

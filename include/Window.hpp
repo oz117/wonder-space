@@ -18,9 +18,11 @@
 # define  WINDOW_HPP_
 
 #include  <SFML/Graphics.hpp>
+#include  <array>
 #include  "InputHandler.hpp"
 #include  "Player.hpp"
 #include  "Enemy.hpp"
+#include  "Settings.hpp"
 
 namespace window {
   // An Alias to make things easier
@@ -30,12 +32,17 @@ namespace window {
   using sfClock = sf::Clock;
   using sfTime = sf::Time;
 
+  const sstring ActorAsset =  "../assets/ship.png";
+  const sstring EnemyRow1 =   "../assets/row_1.png";
+  const sstring EnemyRow2 =   "../assets/row_2.png";
+  const sstring EnemyRow3 =   "../assets/row_3.png";
+
   class Window {
     public:
-      Window(event::InputHandler &inputHandler);
+      Window(event::InputHandler const &inputHandler, Settings const &settings);
       ~Window(void);
-      bool getIsRunning(void) noexcept;
-      sfWindow &getWindow(void) noexcept;
+      const sfWindow &getWindow(void) const noexcept;
+      bool getIsRunning(void) const noexcept;
       bool updateScreen(void) noexcept;
       void pollEvents(void) noexcept;
     private:
@@ -43,10 +50,10 @@ namespace window {
       sfClock       _clock;
       bool          _isRunning;
       event::InputHandler _inputHandler;
-      actor::IActor       *_actor;
-      actor::IActor       *_enemy[3][11];
-      model::Model        *_actorModel;
-      model::Model        *_enemyModel[3];
+      std::unique_ptr<actor::IActor>  _actor;
+      std::unique_ptr<actor::IActor>  _enemy[3][11];
+      model::Model                    _actorModel;
+      std::array<model::Model*, 3>    _enemyModel;
   };
 }
 

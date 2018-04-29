@@ -29,6 +29,6 @@ Model::Model(const std::string& asset){
 // TODO check how to clean texture and sprite
 Model::~Model(void) {}
 
-const Texture& Model::getTexture(void) noexcept{
+const Texture& Model::getTexture(void) const noexcept{
   return this->_texture;
 }

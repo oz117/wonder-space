@@ -25,7 +25,7 @@ Player::Player(
   const int x,
   const int y,
   const int xMax,
-  model::Model& model) : _model(model) {
+  model::Model const &model) : _model(model) {
   this->_x = x;
   this->_y = y - 200;
   this->_sprite.setTexture(this->_model.getTexture());

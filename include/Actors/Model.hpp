@@ -28,7 +28,7 @@ namespace model {
     public:
       Model(const std::string& asset);
       ~Model(void);
-      const Texture& getTexture(void) noexcept;
+      const Texture& getTexture(void) const noexcept;
     private:
       Model(void);
       Texture _texture;

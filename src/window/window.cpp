@@ -20,7 +20,6 @@
 #include  <vector>
 
 #include  "Window.hpp"
-#include  "Settings.hpp"
 
 using namespace window;
 using vec2f = sf::Vector2f;
@@ -29,39 +28,50 @@ using vec2f = sf::Vector2f;
 // Also setting up a few other things just to improve play experience
 // FIXME: Add an icon to the app
 // FIXME: All the cast are temporary. It is only for now and for the tests
-Window::Window(event::InputHandler &inputHandler) {
-  Settings *settings = Settings::getInstance();
-  unsigned int width = (unsigned int) settings->getWidth();
-  unsigned int height = (unsigned int) settings->getHeight();
+Window::Window(event::InputHandler const &inputHandler, Settings const &settings)
+  : _actorModel(ActorAsset) {
+  auto width = (unsigned int) settings.getWidth();
+  auto height = (unsigned int) settings.getHeight();
 
-  this->_window.create(sf::VideoMode(width, height), settings->getTitle());
+  this->_window.create(sf::VideoMode(width, height), settings.getTitle());
   this->_window.setVerticalSyncEnabled(true);
   this->_window.setKeyRepeatEnabled(true);
-  this->_window.setFramerateLimit(60);
+  this->_window.setFramerateLimit(144);
   this->_isRunning = true;
   this->_inputHandler = inputHandler;
-  this->_enemyModel[0] = new model::Model("../assets/row_1.png");
-  this->_enemyModel[1] = new model::Model("../assets/row_2.png");
-  this->_enemyModel[2] = new model::Model("../assets/row_3.png");
-  this->_actorModel = new model::Model("../assets/ship.png");
-  this->_actor = new actor::Player(0, (int)height, (int)width, *this->_actorModel);
-  for(auto i = 0; i < 3; i++)
+  this->_enemyModel[0] = new model::Model(EnemyRow1);
+  this->_enemyModel[1] = new model::Model(EnemyRow2);
+  this->_enemyModel[2] = new model::Model(EnemyRow3);
+  this->_actor
+    = std::unique_ptr<actor::Player>(
+      new actor::Player(0, (int)height, (int)width, this->_actorModel)
+    );
+  for(size_t i = 0; i < 3; i++)
   {
-    auto y = 160 * i;
+    auto y = 160 * (int)i;
+
     for(auto j = 0; j < 11; j++) {
-        this->_enemy[i][j] = new actor::Enemy(j * 104, y, (int)width, *this->_enemyModel[i]);
+        this->_enemy[i][j]
+          = std::unique_ptr<actor::Enemy>(
+            new actor::Enemy(j * 104, y, (int)width, *(this->_enemyModel.at(i)))
+          );
     }
   }
 }
 
 Window::~Window(void) {
+  std::for_each(
+    this->_enemyModel.begin(),
+    this->_enemyModel.begin(),
+    [](model::Model *model) { delete model; }
+  );
 }
 
-bool Window::getIsRunning() noexcept {
+bool Window::getIsRunning() const noexcept {
   return this->_isRunning;
 }
 
-sfWindow &Window::getWindow(void) noexcept {
+const sfWindow &Window::getWindow(void) const noexcept {
   return this->_window;
 }
 
